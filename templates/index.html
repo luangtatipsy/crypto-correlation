@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    Cryptocurrency Price Correlation
+  </title>
+  <style>
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div id="container" style="height: 816px; width: 816px;"></div>
+  </div>
+</body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/heatmap.js"></script>
+<script>
+  function getPointCategoryName(point, dimension) {
+    var series = point.series,
+      isY = dimension === 'y',
+      axis = series[isY ? 'yAxis' : 'xAxis'];
+    return axis.categories[point[isY ? 'y' : 'x']];
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var symbols = "{{ symbols }}".split(",");
+    var dataPoints = JSON.parse("{{ data_points }}");
+    const today = new Date();
+    const dateString = today.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+
+    const chart = function getPointCategoryName(point, dimension) {
+      var series = point.series,
+        isY = dimension === 'y',
+        axis = series[isY ? 'yAxis' : 'xAxis'];
+      return axis.categories[point[isY ? 'y' : 'x']];
+    }
+
+    Highcharts.chart('container', {
+      chart: {
+        type: 'heatmap'
+      },
+
+
+      title: {
+        text: 'Cryptocurrency Price Correlation',
+        align: 'left'
+      },
+
+      subtitle: {
+        text: 'Correlation of Top 20 Cryptocurrencies Ranked by Volume in the Last 30 Days on ' + dateString,
+        align: 'left'
+      },
+
+      xAxis: {
+        categories: symbols,
+        title: null,
+      },
+
+      yAxis: {
+        categories: symbols,
+        title: null,
+        reversed: true,
+      },
+
+      colorAxis: {
+        dataClasses: [
+          { to: -0.5, name: "Strongly Negative", color: "#39568C" },
+          { from: -0.5, name: "Negative", to: 0, color: "#218F8D" },
+          { from: 0, to: 0.5, name: "Positive", color: "#B8DE30" },
+          { from: 0.5, name: "Strongly Positive", color: "#FDE726" },
+          { from: 1.0, name: "Even Point", to: 1.0, color: "#FFEFD5" }
+        ],
+        min: -1,
+        max: 1,
+      },
+
+      tooltip: {
+        formatter: function () {
+          const coinX = getPointCategoryName(this.point, 'x')
+          const coinY = getPointCategoryName(this.point, 'y')
+
+          return '<b>' + coinX + " / " + coinY + '</b><br>' +
+            '<b>Correlation</b>: ' + this.point.value;
+        }
+      },
+
+      series: [{
+        borderWidth: 0.5,
+        borderColor: "#808080",
+        data: dataPoints,
+        dataLabels: {
+          enabled: false
+        }
+      }]
+
+    });
+  });
+</script>
+
+</html>

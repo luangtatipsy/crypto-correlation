@@ -1,0 +1,4 @@
+fastapi
+pycoingecko
+pandas
+uvicorn[standard]
