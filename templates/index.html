@@ -11,7 +11,15 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      min-height: 100vh;
+      min-height: 95vh;
+    }
+    footer{
+      color: #666666;
+      text-align: center;
+      font-weight: bold;
+    }
+    footer code a{
+      color: #333333
     }
   </style>
 </head>
@@ -20,6 +28,9 @@
   <div class="wrapper">
     <div id="container" style="height: 816px; width: 816px;"></div>
   </div>
+  <footer>
+    <code>Made by <a href="https://luangtatipsy.github.io/" target="_blank">luangtatipsy</a></code>
+  </footer>
 </body>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/heatmap.js"></script>
@@ -56,7 +67,7 @@
       },
 
       subtitle: {
-        text: 'Correlation of Top 20 Cryptocurrencies Ranked by Volume in the Last 30 Days on ' + dateString,
+        text: 'Correlation of Top 20 Cryptocurrencies Ranked by Volume in the Last ' + "{{ tf }}" +' Days on ' + dateString,
         align: 'left'
       },
 
