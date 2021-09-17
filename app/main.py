@@ -20,13 +20,12 @@ async def root(request: Request, timeframe: int = 30):
         for row in range(n_rows):
             data_points.append([col, row, api.correlation.iloc[row, col]])
 
-    # print(api.coin_df.to_dict("records"))
-
     return templates.TemplateResponse(
         "index.html",
         context={
             "request": request,
             "symbols": symbols,
+            "tf": timeframe,
             "data_points": data_points,
         },
     )
