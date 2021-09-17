@@ -1,3 +1,4 @@
+import time
 from typing import Dict, List
 
 import pandas as pd
@@ -36,15 +37,25 @@ class CryptoAPI:
         return [prices[1] for prices in response["prices"]]
 
     def create_coin_df(self):
-        top_coins = self._list_top_coins(top_n=20)
+        top_coins = self._list_top_coins(top_n=30)
 
         return pd.DataFrame(top_coins)
 
     def correlate(self):
         price_matrix_df = pd.DataFrame()
-        for coin in self.coin_df["id"]:
-            price_matrix_df[coin] = self._list_price_by_coin(
-                coin_id=coin, days=self.days
-            )
 
-        return price_matrix_df.corr(method="pearson").round(2)
+        for coin in self.coin_df["id"].values:
+            try:
+                prices = self._list_price_by_coin(coin_id=coin, days=self.days)
+
+                if len(prices) < self.days:
+                    continue
+
+                price_matrix_df[coin] = prices
+            except Exception as e:
+                print("History data are not enough")
+
+            if len(price_matrix_df.columns) == 20:
+                break
+
+        return price_matrix_df.corr().round(2)
