@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 from .api.cryptocurrency import CryptoAPI
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
 
 @app.get("/")
