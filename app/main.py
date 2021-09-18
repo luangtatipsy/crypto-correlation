@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 
 from cryptocurrency import CryptoAPI
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 templates = Jinja2Templates(directory="templates")
 
 
