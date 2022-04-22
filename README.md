@@ -32,13 +32,31 @@ python -m pip install -r requirements.txt
   cd app
   uvicorn main:app --reload
   ```
-  4.1. Run via Docker
+  4.2. Run via Docker
   ```sh
   docker build -t crypto-correlation .
   docker run -p 8000:80 crypto-correlation
   ```
 
 5. Visit http://localhost:8000
+
+
+## Deploying 
+1. Install the Heroku CLI if not yet installed. Information about installtion can get [here](https://devcenter.heroku.com/articles/heroku-cli).
+2. Perform login with the `heroku login` command
+3. Create an Heroku app named `cryptocorr` and a remote for the repository.
+```sh
+heroku git:remote -a crptocorr
+```
+4. Push source code to a remote
+```sh
+git push heroku main
+```
+5. Logout from Heroku CLI (optional)
+```sh
+heroku logout
+```
+
 
 ## License
 This repository is distributed under [MIT License](https://github.com/luangtatipsy/crypto-correlation/blob/master/LICENSE)
