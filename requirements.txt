@@ -2,3 +2,5 @@ fastapi
 pycoingecko
 pandas
 uvicorn[standard]
+starlette
+jinja2
